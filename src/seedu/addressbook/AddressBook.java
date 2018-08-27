@@ -105,6 +105,11 @@ public class AddressBook {
                                                       + PERSON_DATA_PREFIX_EMAIL + "EMAIL";
     private static final String COMMAND_ADD_EXAMPLE = COMMAND_ADD_WORD + " John Doe p/98765432 e/johnd@gmail.com";
 
+    private static final String COMMAND_RENAME_WORD = "rename";
+    private static final String COMMAND_RENAME_DESC = "Renames a person in the address book.";
+    private static final String COMMAND_RENAME_PARAMETERS = "INDEX NEW_NAME";
+    private static final String COMMAND_RENAME_EXAMPLE = COMMAND_RENAME_WORD + " 1 Jerry";
+
     private static final String COMMAND_FIND_WORD = "find";
     private static final String COMMAND_FIND_DESC = "Finds all persons whose names contain any of the specified "
                                         + "keywords (case-sensitive) and displays them as a list with index numbers.";
@@ -369,6 +374,8 @@ public class AddressBook {
         final String commandType = commandTypeAndParams[0];
         final String commandArgs = commandTypeAndParams[1];
         switch (commandType) {
+            case COMMAND_RENAME_WORD:
+                return executeRenamePerson(commandArgs);
         case COMMAND_ADD_WORD:
             return executeAddPerson(commandArgs);
         case COMMAND_FIND_WORD:
@@ -492,6 +499,34 @@ public class AddressBook {
         }
         return matchedPersons;
     }
+
+    /**
+     * Renames a person (specified by the command args) to the address book.
+     * The first command argument is the current name and the second is the new name.
+     *
+     * @param commandArgs full command args string from the user
+     * @return feedback display message for the operation result
+     */
+    private static String executeRenamePerson(String commandArgs) {
+        //if (!isDeletePersonArgsValid(commandArgs)) {
+        //    return getMessageForInvalidCommandInput(COMMAND_RENAME_WORD, getUsageInfoForRenameCommand());
+        //}
+        //final int targetVisibleIndex = extractTargetIndexFromDeletePersonArgs(commandArgs);
+        //if (!isDisplayIndexValidForLastPersonListingView(targetVisibleIndex)) {
+        //    return MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
+        //}
+        //final String[] targetInModel = getPersonByLastVisibleIndex(targetVisibleIndex);
+        //return renamePersonInAddressBook(targetInModel) ? getMessageForSuccessfulRename(targetInModel) // success
+        //        : MESSAGE_PERSON_NOT_IN_ADDRESSBOOK; // not found
+        final String[] args = commandArgs.trim().split(" ", 2);
+        final String[] subject = ALL_PERSONS.get(Integer.parseInt(args[0]) - 1);
+        subject[0] = args[1];
+        return "Successfully renamed";
+    }
+
+    //private static boolean renamePersonInAddressBook(String[] targetInModel) {
+    //    targetInModel[0] = "commandArgs";
+    //}
 
     /**
      * Deletes person identified using last displayed index.
@@ -1096,6 +1131,11 @@ public class AddressBook {
         return String.format(MESSAGE_COMMAND_HELP, COMMAND_ADD_WORD, COMMAND_ADD_DESC) + LS
                 + String.format(MESSAGE_COMMAND_HELP_PARAMETERS, COMMAND_ADD_PARAMETERS) + LS
                 + String.format(MESSAGE_COMMAND_HELP_EXAMPLE, COMMAND_ADD_EXAMPLE) + LS;
+    }
+
+    /** Returns the string for showing 'rename' command usage instruction */
+    private static String getUsageInfoForRenameCommand() {
+        return "Wrong Format";
     }
 
     /** Returns the string for showing 'find' command usage instruction */
