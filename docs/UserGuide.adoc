@@ -62,6 +62,26 @@ Shows a list of persons, as an indexed list, in the order they were added to the
 oldest first. +
 Format: `list`
 
+=== Renaming a person: `rename`
+
+Renames a person in the address book. +
+Format: `rename INDEX NEW_NAME`
+
+[NOTE]
+====
+The index refers to the index numbers shown in the most recent listing.
+====
+
+Examples:
+
+* `list` +
+`rename 2 Jack` +
+Renames the 2nd person in the address book to "Jack".
+
+* `find Betsy` +
+`rename 1 Betty` +
+Renames the 1st person in the results of the `find` command to "Betty".
+
 === Finding a person by keyword `find`
 
 Finds persons that match given keywords. +

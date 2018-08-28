@@ -537,7 +537,7 @@ public class AddressBook {
      * @param inputArgs command args from user
      */
     private static String renamePersonInAddressBook(String[] inputArgs) {
-        final String[] subject = ALL_PERSONS.get(Integer.parseInt(inputArgs[0]) - DISPLAYED_INDEX_OFFSET);
+        final String[] subject = getPersonByLastVisibleIndex(Integer.parseInt(inputArgs[0]));
         final String previousName = subject[0];
         subject[0] = inputArgs[1];
         savePersonsToFile(getAllPersonsInAddressBook(), storageFilePath);
